@@ -6,5 +6,5 @@ testing
 # Header 1
 ## Header 2
 
-[About](main/about.md)
+[About](about.md)
 
