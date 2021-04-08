@@ -2,12 +2,79 @@
 
 hello world
 test
-good morning
+<!doctype HTML>
+<HTML>
+<head> 
+<title> 
+Extras Scheduler
+</title> 
+</head> 
+<body>
+<form name='dataform' method = 'post' action = 'extras1b.php'>
+<?php
+$servername="localhost";
+$username="root";
+$password="root";
+$dbname="extras";
 
-### Markdown
-# Header 1
-## Header 2
-### Header 3
+//create connection
+$conn=mysqli_connect($servername,$username,$password);
+//check connection
+if (!$conn){
+	die("Connection failed: ".mysqli_connect_error());
+}
+echo "Connected successfully"."</br>";
 
-- Bulleted
-- List
+mysqli_select_db($conn,$dbname);
+
+//create list of students
+echo "Name of student:"."</br>";
+
+$sql="SELECT txtSurname,txtForename,txtSchoolID FROM Pupils";
+$studentli = mysqli_query($conn,$sql) ;
+
+//while($row=mysqli_fetch_array($studentli)){
+//	echo $row['txtSurname'].",".$row['txtForename'].",".$row['txtSchoolID'];
+//}
+
+$select="<select name='studentid'>";
+
+while ($row=mysqli_fetch_array($studentli)){
+	$id=$row['txtSchoolID'];
+	$surname=$row['txtSurname'];
+	$forename=$row['txtForename'];
+	$select.="<option value='".$id."'>".$surname.",".$forename.",".$form."</option>";
+}
+$select.="</select>";
+echo $select;
+
+echo "</br>";
+
+//name of teacher
+echo "Name of teacher:"."</br>";
+$sql="SELECT User_Code, Firstname, Surname from Staff";
+$teacherli=mysqli_query($conn,$sql);
+
+$select="<select name='teacherid'>";
+
+while ($row=mysqli_fetch_array($teacherli)){
+	$id=$row['User_Code'];
+	$firstname=$row['Firstname'];
+	$surname=$row['Surname'];
+	$select.="<option value='".$id."'>".$firstname.",".$surname."</option>";
+}
+$select.="</select>";
+echo $select;
+
+echo "</br>";
+
+//name of extra
+echo "Name of extra:"."</br>";
+echo "<input type='text' name='extraname'></br>";
+
+mysqli_close($conn);
+?>
+<input type = "submit" name = "btnSubmit" >
+</form>
+</body>
+</HTML>
